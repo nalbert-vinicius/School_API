@@ -45,6 +45,8 @@ namespace School.API.Controllers
             return Ok(Alunos);
         }
 
+        //Da para realizar tipagem do parametro na url /{id:int}
+        // Também da para usar query string na url api/aluno/byId?id=1
         [HttpGet("testeRota/{Id}")]
         public IActionResult GetById(int Id)
         {
@@ -55,6 +57,24 @@ namespace School.API.Controllers
             }
 
             return Ok(alunos);
+        }
+
+        [HttpPost]
+        public IActionResult Post(Aluno aluno)
+        {
+            return Ok(aluno);
+        }
+
+        [HttpPut("{Id}")]
+        public IActionResult Put(int Id)
+        {
+            return Ok("teste");
+        }
+
+        [HttpDelete("{Id}")]
+        public IActionResult Delete(int Id)
+        {
+            return Ok("Deletado");
         }
     }
 }
