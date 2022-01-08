@@ -15,9 +15,11 @@ namespace School.API.Controllers
     public class AlunosController : ControllerBase
     {
         private readonly DataContext _context;
-        public AlunosController(DataContext context) 
+        private readonly IRepository _repo;
+        public AlunosController(DataContext context, IRepository repository) 
         {
             _context = context;
+            _repo = repository;
         }
 
  
