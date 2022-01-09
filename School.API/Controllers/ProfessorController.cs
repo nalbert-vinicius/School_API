@@ -24,7 +24,7 @@ namespace School.API.Controllers
         [HttpGet]
         public IActionResult get()
         {
-            return Ok("A");
+            return Ok(_repo.GetAllProfessores());
         }
 
         [HttpPost]

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using School.API.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -33,6 +34,34 @@ namespace School.API.Data
             return (_context.SaveChanges() > 0);
         }
 
+        public Aluno[] GetAllAlunos()
+        {
+            return _context.Alunos.ToArray();
+        }
 
+        public Aluno[] GetAllById()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Aluno[] GetAlunoByDisciplinaId()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Professor[] GetAllProfessores()
+        {
+            return _context.Professores.ToArray();
+        }
+
+        public Professor[] GetProfessorById()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Professor[] GetProfessorByDisciplinaId()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
