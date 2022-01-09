@@ -1,4 +1,5 @@
-﻿using School.API.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using School.API.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,19 +35,42 @@ namespace School.API.Data
             return (_context.SaveChanges() > 0);
         }
 
-        public Aluno[] GetAllAlunos()
+        //Alunos methods :)
+        public Aluno[] GetAllAlunos(bool incluirProfessor = false)
         {
-            return _context.Alunos.ToArray();
+            IQueryable<Aluno> query = _context.Alunos;
+            if (incluirProfessor)
+            {
+                query = query.Include(a => a.AlunosDisciplinas).ThenInclude(ad => ad.Disciplina).ThenInclude(p => p.Professor);
+            }
+
+            return query.AsNoTracking().OrderBy(a => a.Id).ToArray();
         }
 
-        public Aluno[] GetAllById()
+        public Aluno GetAlunoById(int Id, bool incluirProfessor = false)
         {
-            throw new NotImplementedException();
+            IQueryable<Aluno> query = _context.Alunos;
+            if (incluirProfessor)
+            {
+                query = query.Include(a => a.AlunosDisciplinas).ThenInclude(ad => ad.Disciplina).ThenInclude(p => p.Professor);
+            }
+
+            query = query.AsNoTracking().OrderBy(aluno => aluno.Id).Where(aluno => aluno.Id == Id);
+            //retorna primeirou ou ultimo da query
+            return query.FirstOrDefault();
         }
 
-        public Aluno[] GetAlunoByDisciplinaId()
+        public Aluno[] GetAlunoByDisciplinaId(int disciplinaId,bool incluirProfessor = false)
         {
-            throw new NotImplementedException();
+            IQueryable<Aluno> query = _context.Alunos;
+            if (incluirProfessor)
+            {
+                query = query.Include(a => a.AlunosDisciplinas).ThenInclude(ad => ad.Disciplina).ThenInclude(p => p.Professor);
+            }
+
+            query = query.AsNoTracking().OrderBy(aluno => aluno.Id).Where(a => a.AlunosDisciplinas.Any(ad => ad.Disciplina.Id == disciplinaId));
+
+            return query.AsNoTracking().OrderBy(a => a.Id).ToArray();
         }
 
         public Professor[] GetAllProfessores()

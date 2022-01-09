@@ -15,7 +15,7 @@ namespace School.API.Data
         bool SaveChanges();
 
         Aluno[] GetAllAlunos();
-        Aluno[] GetAllById();
+        Aluno GetAllById();
         Aluno[] GetAlunoByDisciplinaId();
 
         Professor[] GetAllProfessores();
