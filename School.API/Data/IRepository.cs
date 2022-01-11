@@ -14,12 +14,12 @@ namespace School.API.Data
         void Delete<T>(T entity) where T : class;
         bool SaveChanges();
 
-        Aluno[] GetAllAlunos();
-        Aluno GetAllById();
-        Aluno[] GetAlunoByDisciplinaId();
+        Aluno[] GetAllAlunos(bool incluirProfessor = false);
+        Aluno[] GetAllAlunoByDisciplinaId(int disciplinaId, bool incluirProfessor = false);
+        Aluno GetAlunoById(int Id, bool incluirProfessor = false);
 
-        Professor[] GetAllProfessores();
-        Professor[] GetProfessorById();
-        Professor[] GetProfessorByDisciplinaId();
+        Professor[] GetAllProfessores(bool incluirDisciplina = false);
+        Professor[] GetaAllProfessorByDisciplinaId(int disciplinaId, bool incluirDisciplina = false);
+        Professor GetProfessorById(int professorId, bool incluirDisciplina = false);
     }
 }

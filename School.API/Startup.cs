@@ -32,7 +32,7 @@ namespace School.API
             //Adicionando repository do tipo Scoped usa a mesma instancia para todas solicitações em uma mesma requisição
             services.AddScoped<IRepository, Repository>();
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

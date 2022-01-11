@@ -14,17 +14,34 @@ namespace School.API.Controllers
     public class ProfessorController : ControllerBase
     {
         private readonly IRepository _repo;
-        private readonly DataContext _context;
         public ProfessorController(IRepository repository, DataContext context)
         {
             _repo = repository;
-            _context = context;
         }
 
         [HttpGet]
-        public IActionResult get()
+        public IActionResult Get()
         {
-            return Ok(_repo.GetAllProfessores());
+            var professor = _repo.GetAllProfessores(true);
+            if (professor == null) { return BadRequest("Professores não encontrados!"); };
+            return Ok(professor);
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
+        {
+            var professor = _repo.GetProfessorById(id, true);
+            if (professor == null) { return BadRequest("Professores não encontrados!"); };
+            return Ok(professor);
+        }
+
+
+        [HttpGet("ByDisciplina/{id}")]
+        public IActionResult GetBtDisciplinaId(int id)
+        {
+            var professor = _repo.GetaAllProfessorByDisciplinaId(id, true);
+            if (professor == null) { return BadRequest("Professores não encontrados!"); };
+            return Ok(professor);
         }
 
         [HttpPost]
@@ -55,7 +72,7 @@ namespace School.API.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var professor = _context.Professores.FirstOrDefault(p => p.Id == id);
+            var professor = _repo.GetProfessorById(id);
             if(professor == null) { return BadRequest("Professor não encontrado!"); }
             _repo.Delete(professor);
             if (_repo.SaveChanges())
