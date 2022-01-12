@@ -9,7 +9,7 @@ namespace School.API.Models
     {
         public Aluno(){ }
 
-        public Aluno(int id, string nome, string sobrenome, string telefone, int matricula, DateTime data_nasc)
+        public Aluno(int id, int matricula, string nome, string sobrenome, string telefone, DateTime data_nasc)
         {
             this.Id = id;
             this.Nome = nome;

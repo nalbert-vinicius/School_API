@@ -28,7 +28,7 @@ namespace School.API.Data
 
         public void Delete<T>(T entity) where T : class
         {
-            _context.Remove(entity);   
+            _context.Remove(entity);
         }
         public bool SaveChanges()
         {
@@ -60,7 +60,7 @@ namespace School.API.Data
             return query.FirstOrDefault();
         }
 
-        public Aluno[] GetAllAlunoByDisciplinaId(int disciplinaId,bool incluirProfessor = false)
+        public Aluno[] GetAllAlunoByDisciplinaId(int disciplinaId, bool incluirProfessor = false)
         {
             IQueryable<Aluno> query = _context.Alunos;
             if (incluirProfessor)
@@ -82,7 +82,7 @@ namespace School.API.Data
             IQueryable<Professor> query = _context.Professores;
             if (incluirDisciplina)
             {
-                query = query.Include(d => d.Disciplina).ThenInclude(ad => ad.AlunosDisciplinas).ThenInclude(a => a.Aluno) ;
+                query = query.Include(d => d.Disciplina).ThenInclude(ad => ad.AlunosDisciplinas).ThenInclude(a => a.Aluno);
             }
 
             return query.AsNoTracking().OrderBy(a => a.Id).ToArray();
@@ -110,8 +110,9 @@ namespace School.API.Data
             }
 
             return query.AsNoTracking().OrderBy(p => p.Id).Where(p => p.Id == professorId).FirstOrDefault();
-;        }
+            ;
+        }
 
-        
+
     }
 }

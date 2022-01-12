@@ -9,7 +9,7 @@ namespace School.API.Models
     {
         public Professor(){ }
 
-        public Professor(int id, string nome, int registro, string sobrenome, string telefone)
+        public Professor(int id, int registro, string nome, string sobrenome, string telefone)
         {
             Id = id;
             Nome = nome;

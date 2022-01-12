@@ -29,7 +29,7 @@ namespace School.API
                 context => context.UseSqlite(Configuration.GetConnectionString("Default"))
             );
 
-            //Adicionando repository do tipo Scoped usa a mesma instancia para todas solicitações em uma mesma requisição
+            //Adicionando repository do tipo Scoped usa a mesma instancia para todas solicitaÃ§Ãµes em uma mesma requisiÃ§Ã£o
             services.AddScoped<IRepository, Repository>();
 
             services.AddControllers().AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);

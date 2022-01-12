@@ -73,7 +73,7 @@ namespace School.API.Controllers
         public IActionResult Delete(int id)
         {
             var professor = _repo.GetProfessorById(id);
-            if(professor == null) { return BadRequest("Professor não encontrado!"); }
+            if (professor == null) { return BadRequest("Professor não encontrado!"); }
             _repo.Delete(professor);
             if (_repo.SaveChanges())
             {
