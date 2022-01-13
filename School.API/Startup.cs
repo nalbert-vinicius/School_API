@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -24,14 +25,18 @@ namespace School.API
         public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
-            //Adicionando o contexto
+            //Adicionando o contexto - database
             services.AddDbContext<DataContext>(
                 context => context.UseSqlite(Configuration.GetConnectionString("Default"))
             );
 
+            //Procura dentro dos assemblies quais arquivos herdam da classe Profile - do Automapper
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             //Adicionando repository do tipo Scoped usa a mesma instancia para todas solicitações em uma mesma requisição
             services.AddScoped<IRepository, Repository>();
 
+            //Loop de jsons com newtonsoft
             services.AddControllers().AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
         }
 
