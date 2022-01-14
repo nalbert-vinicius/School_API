@@ -19,6 +19,7 @@ namespace School.API.Helpers
             /** 
              * Aluno<Source - Dados>, AlunosDTO<Destination - destino>
              * ForMember<Campo - Nome > Options - opções
+             * Mapeamento de alunos
              * **/
             CreateMap<Aluno, AlunosDTO>()
                 .ForMember(dest => dest.Nome, opt => opt.MapFrom(src => $"{src.Nome} {src.Sobrenome}"))
@@ -27,6 +28,15 @@ namespace School.API.Helpers
             CreateMap<AlunosDTO, Aluno>();
 
             CreateMap<AlunosDTO, Aluno>().ReverseMap();
+
+
+            /** 
+             * Mapemaneto de professores
+             * **/
+            CreateMap<Professor, ProfessorDTO>()
+                .ForMember(dest => dest.Nome, opt => opt.MapFrom(src => $"{src.Nome} {src.Sobrenome}"));
+
+            CreateMap<ProfessorDTO, Professor>().ReverseMap();
         }
     }
 }
