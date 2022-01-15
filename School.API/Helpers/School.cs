@@ -29,7 +29,6 @@ namespace School.API.Helpers
 
             CreateMap<AlunosDTO, Aluno>().ReverseMap();
 
-
             /** 
              * Mapemaneto de professores
              * **/
