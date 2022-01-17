@@ -32,7 +32,7 @@ namespace School.API
                 context => context.UseSqlite(Configuration.GetConnectionString("Default"))
             );
 
-            //Procura dentro dos assemblies quais arquivos herdam da classe Profile - do Automapper
+            //Procura dentro dos assemblies quais arquivos herdam classe Profile - do Automapper
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             //Adicionando repository do tipo Scoped usa a mesma instancia para todas solicitações em uma mesma requisição
