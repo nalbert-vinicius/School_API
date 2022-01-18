@@ -11,8 +11,9 @@ using System.Threading.Tasks;
 
 namespace School.API.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [ApiVersion("2.0")]
+    [Route("api/v{version:apiVersion}/professor")]
     public class ProfessorController : ControllerBase
     {
         private readonly IRepository _repo;

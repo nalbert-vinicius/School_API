@@ -2,6 +2,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -38,20 +39,35 @@ namespace School.API
             //Adicionando repository do tipo Scoped usa a mesma instancia para todas solicitações em uma mesma requisição
             services.AddScoped<IRepository, Repository>();
 
+            services.AddVersionedApiExplorer(opt =>
+            {
+                opt.GroupNameFormat = "'v'VVV";
+                opt.SubstituteApiVersionInUrl = true;
+            }).AddApiVersioning(opt => {
+                opt.DefaultApiVersion = new ApiVersion(1, 0);
+                opt.AssumeDefaultVersionWhenUnspecified = true;
+                opt.ReportApiVersions = true;
+            });
+
+            var apiProviderDescription = services.BuildServiceProvider().GetService<IApiVersionDescriptionProvider>();
+
             services.AddSwaggerGen(options => {
-                options.SwaggerDoc("schoolapi",
+                foreach (var description in apiProviderDescription.ApiVersionDescriptions)
+                {
+                    options.SwaggerDoc(description.GroupName,
                     new Microsoft.OpenApi.Models.OpenApiInfo()
                     {
-                         Title = "School API",
-                         Version = "1.0",
-                         TermsOfService = new Uri("http://TermoDeUso.com"),
-                         Description = "WebAPI escola",
-                         License = new Microsoft.OpenApi.Models.OpenApiLicense
-                         {
-                             Name = "School License",
-                             Url = new Uri("http://TermoDeUso.com")
-                         }
+                        Title = "School API",
+                        Version = description.ApiVersion.ToString(),
+                        TermsOfService = new Uri("http://TermoDeUso.com"),
+                        Description = "WebAPI escola",
+                        License = new Microsoft.OpenApi.Models.OpenApiLicense
+                        {
+                            Name = "School License",
+                            Url = new Uri("http://TermoDeUso.com")
+                        }
                     });
+                }
                 var xmlCommentsFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlCommentsFullPath = Path.Combine(AppContext.BaseDirectory, xmlCommentsFile);
                 options.IncludeXmlComments(xmlCommentsFullPath);
@@ -61,7 +77,7 @@ namespace School.API
             services.AddControllers().AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider apiVersionDescriptionProvider)
         {
             if (env.IsDevelopment())
             {
@@ -70,7 +86,10 @@ namespace School.API
 
             app.UseRouting();
             app.UseSwagger().UseSwaggerUI(opt => {
-                opt.SwaggerEndpoint("swagger/schoolapi/swagger.json", "schoolapi");
+                foreach (var description in apiVersionDescriptionProvider.ApiVersionDescriptions)
+                {
+                    opt.SwaggerEndpoint($"swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
+                }
                 opt.RoutePrefix = "";
             });
 

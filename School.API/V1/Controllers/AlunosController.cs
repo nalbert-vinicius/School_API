@@ -12,8 +12,9 @@ using System.Threading.Tasks;
 
 namespace School.API.Controllers
 {
-    [Route("api/aluno")]
     [ApiController]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/aluno")]
     public class AlunosController : ControllerBase
     {
         private readonly IRepository _repo;
