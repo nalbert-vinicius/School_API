@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using School.API.Helpers;
 using School.API.Models;
 using System;
 using System.Collections.Generic;
@@ -36,7 +37,7 @@ namespace School.API.Data
         }
 
         //ALUNOS METHODS
-        public Aluno[] GetAllAlunos(bool incluirProfessor = false)
+        public async Task<PageList<Aluno>> GetAllAlunosAsync(PageParams pageParams, bool incluirProfessor = false)
         {
             IQueryable<Aluno> query = _context.Alunos;
             if (incluirProfessor)
@@ -44,7 +45,9 @@ namespace School.API.Data
                 query = query.Include(a => a.AlunosDisciplinas).ThenInclude(ad => ad.Disciplina).ThenInclude(p => p.Professor);
             }
 
-            return query.AsNoTracking().OrderBy(a => a.Id).ToArray();
+            query = query.AsNoTracking().OrderBy(a => a.Id);
+
+            return await PageList<Aluno>.CreateAsync(query, pageParams.PageNumber, pageParams.PageSize);
         }
 
         public Aluno GetAlunoById(int Id, bool incluirProfessor = false)

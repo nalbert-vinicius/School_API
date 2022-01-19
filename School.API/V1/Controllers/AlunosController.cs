@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using School.API.Data;
 using School.API.DTO;
+using School.API.Helpers;
 using School.API.Models;
 using System;
 using System.Collections.Generic;
@@ -26,9 +27,9 @@ namespace School.API.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get([FromQuery]PageParams pageParams)
         {
-            var alunos = _repo.GetAllAlunos(true);          
+            var alunos = await _repo.GetAllAlunosAsync(pageParams, true);          
             if (alunos == null) { return BadRequest( "Alunos não encontrados!"); }
             return Ok(_mapper.Map(alunos, new List<AlunosDTO>()));
         }
