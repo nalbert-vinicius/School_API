@@ -31,7 +31,9 @@ namespace School.API.Controllers
         {
             var alunos = await _repo.GetAllAlunosAsync(pageParams, true);          
             if (alunos == null) { return BadRequest( "Alunos não encontrados!"); }
-            return Ok(_mapper.Map(alunos, new List<AlunosDTO>()));
+            var alunoResult = _mapper.Map(alunos, new List<AlunosDTO>());
+            Response.AddPagination(alunos.CurrentPage, alunos.PageSize, alunos.TotalCount, alunos.TotalPages);
+            return Ok(alunoResult);
         }
 
         [HttpGet("{id}")]

@@ -47,6 +47,19 @@ namespace School.API.Data
 
             query = query.AsNoTracking().OrderBy(a => a.Id);
 
+            if(!string.IsNullOrEmpty(pageParams.Nome))
+            {
+                query = query.Where(a => a.Nome.ToUpper().Contains(pageParams.Nome .ToUpper()) ||
+                                         a.Sobrenome.ToUpper().Contains(pageParams.Nome.ToUpper()));
+            }
+
+            if (pageParams.Matricula != null)
+            {
+                query = query.Where(a => a.Matricula == pageParams.Matricula);
+            }
+
+               query = query.Where(a => a.Ativo == pageParams.Ativo);
+
             return await PageList<Aluno>.CreateAsync(query, pageParams.PageNumber, pageParams.PageSize);
         }
 

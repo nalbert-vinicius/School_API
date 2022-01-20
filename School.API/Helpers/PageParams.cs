@@ -15,5 +15,9 @@ namespace School.API.Helpers
             get { return pageSize; }
             set { pageSize = (value > MaxPageSize) ? MaxPageSize : value; } 
         }
+
+        public string Nome { get; set; } = string.Empty;
+        public int? Matricula { get; set; } = null;
+        public bool Ativo { get; set; } = true;
     }
 }
