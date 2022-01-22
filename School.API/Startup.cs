@@ -30,7 +30,7 @@ namespace School.API
         {
             //Adicionando o contexto - database
             services.AddDbContext<DataContext>(
-                context => context.UseSqlite(Configuration.GetConnectionString("Default"))
+                context => context.UseMySql(Configuration.GetConnectionString("MysqlConnection"))
             );
 
             //Procura dentro dos assemblies quais arquivos herdam classe Profile - do Automapper
