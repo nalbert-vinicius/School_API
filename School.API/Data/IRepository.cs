@@ -22,5 +22,6 @@ namespace School.API.Data
         Professor[] GetAllProfessores(bool incluirDisciplina = false);
         Professor[] GetaAllProfessorByDisciplinaId(int disciplinaId, bool incluirDisciplina = false);
         Professor GetProfessorById(int professorId, bool incluirDisciplina = false);
+        Professor[] GetProfessorByAlunoId(int alunoId, bool incluirDisciplina = false);
     }
 }

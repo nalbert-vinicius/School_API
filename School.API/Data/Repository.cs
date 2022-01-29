@@ -129,6 +129,19 @@ namespace School.API.Data
             ;
         }
 
+        public Professor[] GetProfessorByAlunoId(int alunoId, bool incluirDisciplina = false)
+        {
+            IQueryable<Professor> query = _context.Professores;
 
+            if (incluirDisciplina)
+            {
+                query = query.Include(d => d.Disciplina).ThenInclude(ad => ad.AlunosDisciplinas).ThenInclude(a => a.Aluno);
+            }
+
+
+
+            return query.AsNoTracking().OrderBy(p => p.Id).Where(professor => professor.Disciplina.Any(disciplina => disciplina.AlunosDisciplinas.Any(aluno => aluno.AlunoId == alunoId))).ToArray();
+
+        }
     }
 }

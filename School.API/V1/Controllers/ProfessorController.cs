@@ -1,18 +1,16 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using School.API.Data;
 using School.API.DTO;
 using School.API.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace School.API.Controllers
+using System.Collections.Generic;
+
+
+namespace School.API.V1.Controllers
 {
     [ApiController]
-    [ApiVersion("2.0")]
+    [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/professor")]
     public class ProfessorController : ControllerBase
     {
@@ -40,6 +38,13 @@ namespace School.API.Controllers
             return Ok(_mapper.Map<ProfessorDTO>(professor));
         }
 
+        [HttpGet("ByAlunoId/{id}")]
+        public IActionResult GetByAlunoId(int id)
+        {
+            var professor = _repo.GetProfessorByAlunoId(id, true);
+            if (professor == null) { return BadRequest("Professores não encontrados!"); };
+            return Ok(_mapper.Map<IEnumerable<ProfessorDTO>>(professor));
+        }
 
         [HttpGet("ByDisciplina/{id}")]
         public IActionResult GetBtDisciplinaId(int id)
@@ -50,20 +55,20 @@ namespace School.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post(ProfessorCadastroDTO model)
+        public IActionResult Post(DTO.ProfessorCadastroDTO model)
         {
             var professor = _mapper.Map<Professor>(model);
             _repo.Add(professor);
             if (_repo.SaveChanges())
             {
-                return Created("api/professor"+model.Id, _mapper.Map<ProfessorCadastroDTO>(professor));
+                return Created("api/professor"+model.Id, _mapper.Map<DTO.ProfessorCadastroDTO>(professor));
             }
 
             return BadRequest("Professor não foi cadastrado!");
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id, ProfessorCadastroDTO model)
+        public IActionResult Put(int id, DTO.ProfessorCadastroDTO model)
         {
             var professor = _repo.GetProfessorById(id);
             if(professor == null) { return BadRequest("Professor não encontrado!"); }

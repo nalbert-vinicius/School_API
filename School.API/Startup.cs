@@ -28,6 +28,7 @@ namespace School.API
         public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             //Adicionando o contexto - database
             services.AddDbContext<DataContext>(
                 context => context.UseMySql(Configuration.GetConnectionString("MysqlConnection"))
@@ -72,7 +73,6 @@ namespace School.API
                 var xmlCommentsFullPath = Path.Combine(AppContext.BaseDirectory, xmlCommentsFile);
                 options.IncludeXmlComments(xmlCommentsFullPath);
             });
-
             //Loop de jsons com newtonsoft
             services.AddControllers().AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
         }
@@ -85,6 +85,7 @@ namespace School.API
             }
 
             app.UseRouting();
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             app.UseSwagger().UseSwaggerUI(opt => {
                 foreach (var description in apiVersionDescriptionProvider.ApiVersionDescriptions)
                 {

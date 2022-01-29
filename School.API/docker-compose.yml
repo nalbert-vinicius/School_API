@@ -1,7 +1,7 @@
 version: "3.8"
 
 volumes: 
-    SchoolDb:
+    SchoolDB:
 
 networks: 
     mysqlNET:
@@ -15,7 +15,7 @@ services:
         ports: 
             - "3306:3306"
         volumes: 
-            - SchoolDb:/var/lib/mysql
+            - SchoolDB:/var/lib/mysql
         networks: 
             - mysqlNET
         environment: 

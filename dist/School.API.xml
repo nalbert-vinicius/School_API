@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>School.API</name>
+    </assembly>
+    <members>
+        <member name="M:School.API.Helpers.School.#ctor">
+                     * É possivel usar a função ReverseMap() para que o mapeamento possar ser feito de ambos os lados
+                     * Aluno to alunoDTO e alunoDTO para aluno
+                    *
+        </member>
+    </members>
+</doc>

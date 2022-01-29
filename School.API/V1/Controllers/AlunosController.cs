@@ -11,7 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 
-namespace School.API.Controllers
+namespace School.API.V1.Controllers
 {
     [ApiController]
     [ApiVersion("1.0")]

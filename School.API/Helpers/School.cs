@@ -1,10 +1,6 @@
 ﻿using AutoMapper;
 using School.API.DTO;
 using School.API.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace School.API.Helpers
 {
