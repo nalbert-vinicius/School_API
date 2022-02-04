@@ -11,4 +11,4 @@ no projeto foi realizado configuração BÁSICA do swagger para estudos
 Versão .net 5.0.404
 
 ## Front - Tela inicial
-![Pojeto School](https://github.com/nalbert-vinicius/School_API/blob/master/img/swagger.PNG)
+![Pojeto School](https://github.com/nalbert-vinicius/School_API/blob/master/img/img.PNG)
